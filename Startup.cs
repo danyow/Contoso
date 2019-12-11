@@ -56,6 +56,11 @@ namespace Contoso
 
             app.UseEndpoints(endpoints =>
             {
+                // MVC的方式
+                // endpoints.MapControllerRoute(
+                //     name: "default",
+                //     pattern: "{controller=Home}/{action=Index}/{id?}");
+                // 
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });

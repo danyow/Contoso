@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ContosoUniversity.Data;
@@ -21,11 +20,6 @@ namespace Contoso.Controllers
             _context = context;
         }
 
-        public async Task<ActionResult<IEnumerable<Student>>> Index()
-        {
-            return await _context.Students.ToListAsync();
-        }
-
         // GET: api/Students
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
@@ -37,6 +31,8 @@ namespace Contoso.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
+
+            Console.WriteLine("GetStudents");
             var student = await _context.Students.FindAsync(id);
 
             if (student == null)

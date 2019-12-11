@@ -30,6 +30,8 @@ namespace Contoso.Pages.Students
 
             Student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id);
 
+            // Student = Contoso.Controllers.StudentsController.GetSt
+
             if (Student == null)
             {
                 return NotFound();
