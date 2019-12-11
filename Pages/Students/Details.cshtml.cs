@@ -30,7 +30,13 @@ namespace Contoso.Pages.Students
 
             Student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id);
 
+            // ViewComponent("").ViewData.
             // Student = Contoso.Controllers.StudentsController.GetSt
+            // PageContext.RouteData.Values["controller"];
+
+            // var otherController = DependencyResolver.Current.GetService<另一个控制器的类名>();
+            // var result = otherController.另一个动作方法();
+            // return result;
 
             if (Student == null)
             {

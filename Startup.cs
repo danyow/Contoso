@@ -30,6 +30,7 @@ namespace Contoso
             {
                 options.UseNpgsql(Configuration.GetConnectionString("PostgreSQL"));
             });
+            // services.AddConnections();
             services.AddRazorPages();
         }
 
