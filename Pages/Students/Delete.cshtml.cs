@@ -4,18 +4,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ContosoUniversity.Data;
 using ContosoUniversity.Models;
 
-namespace Contoso.Pages.School
+namespace Contoso.Pages.Students
 {
-    public class EditModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly ContosoUniversity.Data.SchoolContext _context;
 
-        public EditModel(ContosoUniversity.Data.SchoolContext context)
+        public DeleteModel(ContosoUniversity.Data.SchoolContext context)
         {
             _context = context;
         }
@@ -39,39 +38,22 @@ namespace Contoso.Pages.School
             return Page();
         }
 
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for
-        // more details see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (!ModelState.IsValid)
+            if (id == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Student).State = EntityState.Modified;
+            Student = await _context.Students.FindAsync(id);
 
-            try
+            if (Student != null)
             {
+                _context.Students.Remove(Student);
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(Student.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
             }
 
             return RedirectToPage("./Index");
-        }
-
-        private bool StudentExists(int id)
-        {
-            return _context.Students.Any(e => e.ID == id);
         }
     }
 }

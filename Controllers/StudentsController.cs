@@ -12,23 +12,28 @@ namespace Contoso.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class StudentsController : ControllerBase
     {
         private readonly SchoolContext _context;
 
-        public StudentController(SchoolContext context)
+        public StudentsController(SchoolContext context)
         {
             _context = context;
         }
 
-        // GET: api/Student
+        public async Task<ActionResult<IEnumerable<Student>>> Index()
+        {
+            return await _context.Students.ToListAsync();
+        }
+
+        // GET: api/Students
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
         {
             return await _context.Students.ToListAsync();
         }
 
-        // GET: api/Student/5
+        // GET: api/Students/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Student>> GetStudent(int id)
         {
@@ -42,7 +47,7 @@ namespace Contoso.Controllers
             return student;
         }
 
-        // PUT: api/Student/5
+        // PUT: api/Students/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPut("{id}")]
@@ -74,7 +79,7 @@ namespace Contoso.Controllers
             return NoContent();
         }
 
-        // POST: api/Student
+        // POST: api/Students
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
         [HttpPost]
@@ -86,7 +91,7 @@ namespace Contoso.Controllers
             return CreatedAtAction("GetStudent", new { id = student.ID }, student);
         }
 
-        // DELETE: api/Student/5
+        // DELETE: api/Students/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Student>> DeleteStudent(int id)
         {

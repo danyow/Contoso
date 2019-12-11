@@ -6,9 +6,9 @@ Contoso University Web App
 
 Server=localhost;Database=test;Uid=root;Pwd=123456; -->
 
-dotnet aspnet-codegenerator razorpage -m Student -dc SchoolContext -udl -outDir Pages\School --referenceScriptLibraries
+dotnet aspnet-codegenerator razorpage -m Student -dc SchoolContext -udl -outDir Pages\Students --referenceScriptLibraries
 
-dotnet aspnet-codegenerator controller -name StudentController -async -api -m Student -dc SchoolContext --relativeFolderPath Controllers
+dotnet aspnet-codegenerator controller -name StudentsController -async -api -m Student -dc SchoolContext --relativeFolderPath Controllers
 
 dotnet ef migrations add InitialCreate
 dotnet ef database update
