@@ -20,6 +20,17 @@ namespace Contoso.Controllers
             _context = context;
         }
 
+        public class TestModel
+        {
+            public string fuckJson { get; set; }
+        }
+        [HttpGet("test")]
+        public ActionResult<TestModel> TestFuck() 
+        {
+            return new TestModel{fuckJson = "fucccccck"};
+        }
+
+
         // GET: api/Students
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
@@ -33,7 +44,19 @@ namespace Contoso.Controllers
         {
 
             Console.WriteLine("GetStudents");
-            var student = await _context.Students.FindAsync(id);
+            var student = await _context.Students
+                // .Include(s => s.Enrollments)
+                // .ThenInclude( e => e.Course)
+                // .AsNoTracking()
+                // .FirstOrDefaultAsync(m => m.ID == id);
+                .FindAsync(id);
+
+            var student_tets = await _context.Students
+                .Include(s => s.Enrollments)
+                .ThenInclude( e => e.Course)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
+                // .FindAsync(id);
 
             if (student == null)
             {

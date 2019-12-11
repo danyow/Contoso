@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+// using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ContosoUniversity.Data;
@@ -28,15 +29,11 @@ namespace Contoso.Pages.Students
                 return NotFound();
             }
 
-            Student = await _context.Students.FirstOrDefaultAsync(m => m.ID == id);
-
-            // ViewComponent("").ViewData.
-            // Student = Contoso.Controllers.StudentsController.GetSt
-            // PageContext.RouteData.Values["controller"];
-
-            // var otherController = DependencyResolver.Current.GetService<另一个控制器的类名>();
-            // var result = otherController.另一个动作方法();
-            // return result;
+            Student = await _context.Students
+                .Include(s => s.Enrollments)
+                .ThenInclude( e => e.Course)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Student == null)
             {
